@@ -3,7 +3,15 @@ package com.race.main;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
+import java.io.File;
 import java.util.Random;
+
+import javafx.scene.media.Media;
+import javafx.scene.media.MediaPlayer;
+
+import javax.sound.sampled.AudioInputStream;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 
 /**
  * @brief Pagrindine klase, kurioje yra kuriami esminiai objektai
@@ -51,6 +59,19 @@ public class Game extends Canvas implements Runnable{
         thread = new Thread(this);
         thread.start();
         runnning = true;
+
+        try{
+            //AudioInputStream ais = AudioSystem.getAudioInputStream(Main);
+            AudioInputStream ais = AudioSystem.getAudioInputStream(new File("C:\\Users\\Žygimantas\\Desktop\\Java\\race-game\\src\\Police_siren_sound_effect_1.wav"));
+            Clip test = AudioSystem.getClip();
+            test.open(ais);
+            test.start();
+            test.drain();
+            //test.close();
+        }catch(Exception ex){
+            ex.printStackTrace();
+        }
+
     }
     /**
      * @brief Stabdomas pastovus programos atnaujinimas
@@ -127,6 +148,7 @@ public class Game extends Canvas implements Runnable{
      */
     public static void main(String args[]){
         new Game();
+
     }
 }
 

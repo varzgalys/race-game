@@ -4,6 +4,8 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.*;
+import java.util.List;
 
 /**
  * @brief Kuriami kitu automobiliu (kliuciu kuriu reikia vengti) objektai
@@ -13,6 +15,7 @@ public class EnemyCar extends GameObject {
     private Image image;
     private Handler handler;
     private GameObject player;
+
     private AISight aiRightSight;
     private AISight aiLeftSight;
     private AISight aiFrontSight;
@@ -21,6 +24,9 @@ public class EnemyCar extends GameObject {
     private AISight aiBackLeftSight;
     private AISight aiFrontRightSight;
     private AISight aiFrontLeftSight;
+
+
+
 
     /**
      * @brief Valdomam objektui priskiriamos pradines koordinates, ID. Uzklausiama paveikslelio is isores
@@ -35,14 +41,17 @@ public class EnemyCar extends GameObject {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
         aiFrontSight = new AISight(x, y, ID.AISight, handler, this, 0, -60);
         aiBackSight = new AISight(x, y, ID.AISight, handler, this, 0, 60);
-        aiRightSight = new AISight(x, y, ID.AISight, handler, this, 35, 0);
-        aiLeftSight = new AISight(x, y, ID.AISight, handler, this, -35, 0);
+        aiRightSight = new AISight(x, y, ID.AISight, handler, this, -35, 0);
+        aiLeftSight = new AISight(x, y, ID.AISight, handler, this,35 , 0);
+
         aiBackRightSight = new AISight(x, y, ID.AISight, handler, this, 35, 60);
         aiBackLeftSight = new AISight(x, y, ID.AISight, handler, this, -35, 60);
         aiFrontRightSight = new AISight(x, y, ID.AISight, handler, this, 35, -60);
         aiFrontLeftSight = new AISight(x, y, ID.AISight, handler, this, -35, -60);
+
         handler.addObject(aiFrontSight);
         handler.addObject(aiRightSight);
         handler.addObject(aiLeftSight);
@@ -79,68 +88,31 @@ public class EnemyCar extends GameObject {
         boolean frontRight = aiFrontLeftSight.getIntercepts();
         boolean backRight = aiBackLeftSight.getIntercepts();
 
-        float steering = (float) 0.9;
-        float stopping = (float) 0.68;
+        float steering = (float) 1.0;
+        float stopping = (float) 1.0;
 
-        if (front)
+        if(front)
         {
             velY += stopping;
-            System.out.println("Stabdo mentas");
-            if (right)
-            {
-                velX -= steering;
-                System.out.println("Suka kairen");
-            }
-            else if (left)
-            {
-                velX += steering;
-                System.out.println("Desinen");
-            }
-            else
-            {
-                if (x > 210){velX -= steering;}
-                else {velX += steering;}
-            }
         }
-//        if(front && right)
-//        {
-//            velY +=stopping;
-//            velX -= steering;
-//            if (x > 210) {
-//                velY -= steering;
-//            }
-//            else {velX +=steering;}
-//        }
-//        else if(front && left)
-//        {
-//            velY +=stopping;
-//            velX += steering;
-//            if (x > 210) {
-//                steering= steering*2;
-//                velY -= steering;
-//            }
-//            else {velX +=steering;}
-//        }
-//        else if(back && left)
-//        {
-//            velY -=stopping;
-//            velX += steering;
-//            if (x > 210) {
-//                steering= steering*2;
-//                velY -= steering;
-//            }
-//            else {velX +=steering;}
-//        }
-//        else if(back && left)
-//        {
-//            velY -=stopping;
-//            velX -= steering;
-//            if (x > 210) {
-//                steering= steering*2;
-//                velY -= steering;
-//            }
-//            else {velX +=steering;}
-//        }
+        else if(frontLeft)
+        {
+            velY+= stopping;
+            velX+=steering;
+        }
+        else if(frontRight)
+        {
+            velY+=stopping;
+            velX-=steering;
+        }
+        else if(right)
+        {
+            velX+=3;
+        }
+        else if(left)
+        {
+            velX-=3;
+        }
         else {
             int speed = 1;
             float playerX = player.getX();

@@ -42,7 +42,7 @@ public class AISight extends GameObject {
      * @brief Objektui suteikiamas kolisijos zonos dydis ir koordinates
      */
     public Rectangle getBounds() {
-        return new Rectangle((int)x,(int)y, 35, 60);
+        return new Rectangle((int)x,(int)y, 25, 20);
     }
 
 
@@ -61,17 +61,25 @@ public class AISight extends GameObject {
 
     private void collision() {
         intercepts = false;
-        for (int i = 0; i < handler.gameObjects.size(); i++) {
+
+
+        for (int i = 0; i < handler.gameObjects.size(); i++)
+        {
             GameObject tempObject = handler.gameObjects.get(i);
             if (tempObject.getId() == ID.ObstacleCar)
             {
-                if (getBounds().intersects(tempObject.getBounds()))
+//                if (getBounds().intersects(tempObject.getBounds()))
+//                {
+//                    intercepts = true;
+//                }
+                if (tempObject.getBounds().intersects(this.getBounds())) //this.getBounds
                 {
                     intercepts = true;
                 }
 
             }
         }
+
     }
     private void collision2()
     {
@@ -94,8 +102,10 @@ public class AISight extends GameObject {
      * @brief Prisikiriamas ir atnaujinamas objekto grafinis atvaizdavimas naudojant biblioteka is isores
      */
     @Override
-    public void render(Graphics graphics) {
-        graphics.drawImage(image, (int)x, (int)y, null);
+    public void render(Graphics graphics)
+    {
+//        graphics.drawImage(image, (int)x, (int)y, null);
+        graphics.drawRect((int)x,(int)y,25,20);
     }
 }
 

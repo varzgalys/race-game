@@ -94,24 +94,36 @@ public class EnemyCar extends GameObject {
         if(front)
         {
             velY += stopping;
+
+            if (front && !left)
+            {
+                velX-=2;
+            }
+            else if(front && !right)
+            {velX += 2;}
         }
         else if(frontLeft)
         {
             velY+= stopping;
-            velX+=steering;
+            velX+=2;
         }
         else if(frontRight)
         {
             velY+=stopping;
-            velX-=steering;
+            velX-=2;
         }
         else if(right)
         {
-            velX+=3;
+            velX+=2;
         }
         else if(left)
         {
-            velX-=3;
+            velX-=2;
+        }
+        else if(right && left)
+        {
+            //driver.suicide()
+            velX +=0;
         }
         else {
             int speed = 1;

@@ -17,10 +17,10 @@ public class EnemyCar extends GameObject {
     private AISight aiLeftSight;
     private AISight aiFrontSight;
     private AISight aiBackSight;
-    private AISight aiBackRight;
-    private AISight aiBackLeft;
-    private AISight aiFrontRight;
-    private AISight aiFrontLeft;
+    private AISight aiBackRightSight;
+    private AISight aiBackLeftSight;
+    private AISight aiFrontRightSight;
+    private AISight aiFrontLeftSight;
 
     /**
      * @brief Valdomam objektui priskiriamos pradines koordinates, ID. Uzklausiama paveikslelio is isores
@@ -39,18 +39,18 @@ public class EnemyCar extends GameObject {
         aiBackSight = new AISight(x, y, ID.AISight, handler, this, 0, 60);
         aiRightSight = new AISight(x, y, ID.AISight, handler, this, 35, 0);
         aiLeftSight = new AISight(x, y, ID.AISight, handler, this, -35, 0);
-        aiBackRight = new AISight(x, y, ID.AISight, handler, this, 35, 60);
-        aiBackLeft = new AISight(x, y, ID.AISight, handler, this, -35, 60);
-        aiFrontRight = new AISight(x, y, ID.AISight, handler, this, 35, -60);
-        aiFrontLeft = new AISight(x, y, ID.AISight, handler, this, -35, -60);
+        aiBackRightSight = new AISight(x, y, ID.AISight, handler, this, 35, 60);
+        aiBackLeftSight = new AISight(x, y, ID.AISight, handler, this, -35, 60);
+        aiFrontRightSight = new AISight(x, y, ID.AISight, handler, this, 35, -60);
+        aiFrontLeftSight = new AISight(x, y, ID.AISight, handler, this, -35, -60);
         handler.addObject(aiFrontSight);
         handler.addObject(aiRightSight);
         handler.addObject(aiLeftSight);
         handler.addObject(aiBackSight);
-        handler.addObject(aiBackRight);
-        handler.addObject(aiBackLeft);
-        handler.addObject(aiFrontRight);
-        handler.addObject(aiFrontLeft);
+        handler.addObject(aiBackRightSight);
+        handler.addObject(aiBackLeftSight);
+        handler.addObject(aiFrontRightSight);
+        handler.addObject(aiFrontLeftSight);
 }
 
     /**
@@ -74,69 +74,73 @@ public class EnemyCar extends GameObject {
         boolean left = aiLeftSight.getIntercepts();
         boolean front = aiFrontSight.getIntercepts();
         boolean back = aiBackSight.getIntercepts();
+        boolean frontLeft = aiFrontLeftSight.getIntercepts();
+        boolean backLeft = aiBackLeftSight.getIntercepts();
+        boolean frontRight = aiFrontLeftSight.getIntercepts();
+        boolean backRight = aiBackLeftSight.getIntercepts();
 
         float steering = (float) 0.9;
         float stopping = (float) 0.68;
 
-//        if (front)
+        if (front)
+        {
+            velY += stopping;
+            System.out.println("Stabdo mentas");
+            if (right)
+            {
+                velX -= steering;
+                System.out.println("Suka kairen");
+            }
+            else if (left)
+            {
+                velX += steering;
+                System.out.println("Desinen");
+            }
+            else
+            {
+                if (x > 210){velX -= steering;}
+                else {velX += steering;}
+            }
+        }
+//        if(front && right)
 //        {
-//            velY += stopping;
-//            System.out.println("Stabdo mentas");
-//            if (right)
-//            {
-//                velX -= steering;
-//                System.out.println("Suka kairen");
+//            velY +=stopping;
+//            velX -= steering;
+//            if (x > 210) {
+//                velY -= steering;
 //            }
-//            else if (left)
-//            {
-//                velX += steering;
-//                System.out.println("Desinen");
-//            }
-//            else
-//            {
-//                if (x > 210){velX -= steering;}
-//                else {velX += steering;}
-//            }
+//            else {velX +=steering;}
 //        }
-        if(front && right)
-        {
-            velY +=stopping;
-            velX -= steering;
-            if (x > 210) {
-                velY -= steering;
-            }
-            else {velX +=steering;}
-        }
-        else if(front && left)
-        {
-            velY +=stopping;
-            velX += steering;
-            if (x > 210) {
-                steering= steering*2;
-                velY -= steering;
-            }
-            else {velX +=steering;}
-        }
-        else if(back && left)
-        {
-            velY -=stopping;
-            velX += steering;
-            if (x > 210) {
-                steering= steering*2;
-                velY -= steering;
-            }
-            else {velX +=steering;}
-        }
-        else if(back && left)
-        {
-            velY -=stopping;
-            velX -= steering;
-            if (x > 210) {
-                steering= steering*2;
-                velY -= steering;
-            }
-            else {velX +=steering;}
-        }
+//        else if(front && left)
+//        {
+//            velY +=stopping;
+//            velX += steering;
+//            if (x > 210) {
+//                steering= steering*2;
+//                velY -= steering;
+//            }
+//            else {velX +=steering;}
+//        }
+//        else if(back && left)
+//        {
+//            velY -=stopping;
+//            velX += steering;
+//            if (x > 210) {
+//                steering= steering*2;
+//                velY -= steering;
+//            }
+//            else {velX +=steering;}
+//        }
+//        else if(back && left)
+//        {
+//            velY -=stopping;
+//            velX -= steering;
+//            if (x > 210) {
+//                steering= steering*2;
+//                velY -= steering;
+//            }
+//            else {velX +=steering;}
+//        }
         else {
             int speed = 1;
             float playerX = player.getX();

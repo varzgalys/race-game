@@ -27,6 +27,14 @@ public class AISight extends GameObject {
         this.x_range = x_range;
         this.y_range = y_range;
         this.enemyCar = enemyCar;
+
+        try {
+            this.image = ImageIO.read(new File("src/EnemyCar.jpg"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
         velY = (x / 60); //speed
     }
 
@@ -55,10 +63,25 @@ public class AISight extends GameObject {
         intercepts = false;
         for (int i = 0; i < handler.gameObjects.size(); i++) {
             GameObject tempObject = handler.gameObjects.get(i);
-            if (tempObject.getId() == ID.ObstacleCar) {
-                if (getBounds().intersects(tempObject.getBounds())) {
+            if (tempObject.getId() == ID.ObstacleCar)
+            {
+                if (getBounds().intersects(tempObject.getBounds()))
+                {
                     intercepts = true;
                 }
+
+            }
+        }
+    }
+    private void collision2()
+    {
+        intercepts = false;
+        for (int i = 0; i < handler.gameObjects.size(); i++) {
+            GameObject tempObject = handler.gameObjects.get(i);
+            if (tempObject.getId() == ID.ObstacleCar)
+            {
+
+
             }
         }
     }
@@ -71,6 +94,8 @@ public class AISight extends GameObject {
      * @brief Prisikiriamas ir atnaujinamas objekto grafinis atvaizdavimas naudojant biblioteka is isores
      */
     @Override
-    public void render(Graphics graphics) {}
+    public void render(Graphics graphics) {
+        graphics.drawImage(image, (int)x, (int)y, null);
+    }
 }
 

@@ -4,8 +4,6 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
-import java.util.*;
-import java.util.List;
 
 /**
  * @brief Kuriami kitu automobiliu (kliuciu kuriu reikia vengti) objektai
@@ -46,11 +44,11 @@ public class EnemyCar extends GameObject {
         aiBackSight = new AISight(x, y, ID.AISight, handler, this, 0, 60);
         aiRightSight = new AISight(x, y, ID.AISight, handler, this, -35, 0);
         aiLeftSight = new AISight(x, y, ID.AISight, handler, this,35 , 0);
+        aiFrontRightSight = new AISight(x, y, ID.AISight, handler, this, 35, -60);
+        aiFrontLeftSight = new AISight(x, y, ID.AISight, handler, this, -35, -60);
 
         aiBackRightSight = new AISight(x, y, ID.AISight, handler, this, 35, 60);
         aiBackLeftSight = new AISight(x, y, ID.AISight, handler, this, -35, 60);
-        aiFrontRightSight = new AISight(x, y, ID.AISight, handler, this, 35, -60);
-        aiFrontLeftSight = new AISight(x, y, ID.AISight, handler, this, -35, -60);
 
         handler.addObject(aiFrontSight);
         handler.addObject(aiRightSight);
@@ -82,64 +80,42 @@ public class EnemyCar extends GameObject {
         boolean right = aiRightSight.getIntercepts();
         boolean left = aiLeftSight.getIntercepts();
         boolean front = aiFrontSight.getIntercepts();
-        boolean back = aiBackSight.getIntercepts();
         boolean frontLeft = aiFrontLeftSight.getIntercepts();
-        boolean backLeft = aiBackLeftSight.getIntercepts();
-        boolean frontRight = aiFrontLeftSight.getIntercepts();
-        boolean backRight = aiBackLeftSight.getIntercepts();
+        boolean frontRight = aiFrontRightSight.getIntercepts();
 
-        float steering = (float) 1.0;
-        float stopping = (float) 1.0;
+//        boolean back = aiBackSight.getIntercepts();
+//        boolean backLeft = aiBackLeftSight.getIntercepts();
+//        boolean backRight = aiBackLeftSight.getIntercepts();
+        float speed = 0.5f;
+        float breakSpeed = 0.6f;
 
         if(front)
         {
-            velY += stopping;
-
-            if (front && !left)
-            {
-                velX-=2;
-            }
-            else if(front && !right)
-            {velX += 2;}
+            velY+=breakSpeed;
         }
-        else if(frontLeft)
+        else if(right && !(left))
         {
-            velY+= stopping;
-            velX+=2;
+            velX+=speed;
         }
+        else if(left && !(right))
+        {
+            velX-=speed;
+        }
+
         else if(frontRight)
         {
-            velY+=stopping;
-            velX-=2;
+            velX-=speed;
+            System.out.println("PK");
         }
-        else if(right)
+        else if (frontLeft)
         {
-            velX+=2;
+            velX+=speed;
+            System.out.println("PD");
         }
-        else if(left)
+
+        else
         {
-            velX-=2;
-        }
-        else if(right && left)
-        {
-            //driver.suicide()
-            velX +=0;
-        }
-        else {
-            int speed = 1;
-            float playerX = player.getX();
-            float playerY = player.getY();
-
-            float dir_x = playerX - x;
-            float dir_y = playerY - y;
-
-            float hyp = (float) Math.sqrt(dir_x*dir_x + dir_y*dir_y);
-
-            dir_x /= hyp;
-            dir_y /= hyp;
-
-            velX = dir_x*speed;
-            velY = dir_y*speed;
+            chasePlayer();
         }
 
         collision();
@@ -154,6 +130,23 @@ public class EnemyCar extends GameObject {
                 }
             }
         }
+    }
+    private void chasePlayer()
+    {
+        int speed = 1;
+        float playerX = player.getX();
+        float playerY = player.getY();
+
+        float dir_x = playerX - x;
+        float dir_y = playerY - y;
+
+        float hyp = (float) Math.sqrt(dir_x*dir_x + dir_y*dir_y);
+
+        dir_x /= hyp;
+        dir_y /= hyp;
+
+        velX = dir_x*speed;
+        velY = dir_y*speed;
     }
 
     /**

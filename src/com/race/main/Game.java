@@ -41,7 +41,7 @@ public class Game extends Canvas implements Runnable{
         window = new Window(width,height,"RACE",this);
         handler.addObject(new GameBackground(0,-1400,ID.GameBackground));
         Player player = new Player(190,350, ID.Player,handler);
-        numberOfCars = 11;
+        numberOfCars = 8;
 
         handler.addObject(player);
         for (int i = 0; i < numberOfCars; i++){

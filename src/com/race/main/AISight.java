@@ -42,7 +42,7 @@ public class AISight extends GameObject {
      * @brief Objektui suteikiamas kolisijos zonos dydis ir koordinates
      */
     public Rectangle getBounds() {
-        return new Rectangle((int)x,(int)y, 25, 20);
+        return new Rectangle((int)x,(int)y, 30, 40);
     }
 
 
@@ -105,7 +105,7 @@ public class AISight extends GameObject {
     public void render(Graphics graphics)
     {
 //        graphics.drawImage(image, (int)x, (int)y, null);
-        graphics.drawRect((int)x,(int)y,25,20);
+        graphics.drawRect((int)x,(int)y,30,40);
     }
 }
 

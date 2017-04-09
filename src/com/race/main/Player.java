@@ -63,7 +63,7 @@ public class Player extends GameObject {
         x = x + velX;
         y = y + velY;
         x = border((int)x, 90, 295);
-        y = border((int)y, 100, 500);
+        y = border((int)y, 100, 750);//100 500
 
         collision();
     }

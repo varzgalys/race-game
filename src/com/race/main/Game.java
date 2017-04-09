@@ -20,7 +20,7 @@ import javax.sound.sampled.Clip;
 public class Game extends Canvas implements Runnable{
 
 
-    private static final int width = 420, height = 600;
+    private static final int width = 420, height = 800;//was600
     private Random random;
     private Thread thread;
     private boolean runnning = false;
@@ -40,7 +40,7 @@ public class Game extends Canvas implements Runnable{
         this.addKeyListener(new KeyInput(handler));
         window = new Window(width,height,"RACE",this);
         handler.addObject(new GameBackground(0,-1400,ID.GameBackground));
-        Player player = new Player(190,350, ID.Player,handler);
+        Player player = new Player(100,700, ID.Player,handler);
         numberOfCars = 8;
 
         handler.addObject(player);
@@ -49,7 +49,7 @@ public class Game extends Canvas implements Runnable{
             handler.addObject(new ObstacleCar(((random4 + 1)*60) + 42,random.nextInt(2000)-2000,ID.ObstacleCar));
         }
         handler.addObject(player.getScore());
-        handler.addObject(new EnemyCar(280,500, ID.EnemyCar, player, handler));
+        handler.addObject(new EnemyCar(280,800, ID.EnemyCar, player, handler));
     }
     /**
      * @brief Kuriami objektai is isoriniu biblioteku, pastoviam programos atnaujinimui, bei pradedamas pastovus atnaujinimas

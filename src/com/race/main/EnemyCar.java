@@ -92,25 +92,41 @@ public class EnemyCar extends GameObject {
         if(front)
         {
             velY+=breakSpeed;
+            return;
+        }
+        else if(left && right || frontLeft && frontRight)
+        {
+            stayStill();
+            if(!front)
+            {
+                velY-=speed;
+                return;
+            }
+            return;
         }
         else if(right && !(left))
         {
             velX+=speed;
+            return;
         }
         else if(left && !(right))
         {
             velX-=speed;
+            return;
         }
+
 
         else if(frontRight)
         {
             velX-=speed;
             System.out.println("PK");
+            return;
         }
         else if (frontLeft)
         {
             velX+=speed;
             System.out.println("PD");
+            return;
         }
 
         else
@@ -147,6 +163,11 @@ public class EnemyCar extends GameObject {
 
         velX = dir_x*speed;
         velY = dir_y*speed;
+    }
+
+    private void stayStill()
+    {
+        velX=0;
     }
 
     /**

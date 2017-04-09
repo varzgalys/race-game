@@ -43,7 +43,7 @@ public class ObstacleCar extends GameObject {
     public void tick() {
         x = x + velX;
         y = y + velY;
-        if (y >= 650) {
+        if (y >= 900) {//650
             random = new Random();
             int random4 = random.nextInt(4);
             x = (random4 + 1) * 60 + 42;
